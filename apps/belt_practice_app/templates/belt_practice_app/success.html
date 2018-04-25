@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quotes and Stuff</title>
+    {% load static %}
+
+</head>
+
+<body>
+                <h3>Ay oh {{ name }}!</h3>
+                <h4>Quotable?</h4>
+                        {% for quote in quotes %}
+                            {% if quotes %} 
+                        <div>
+                            <p>{{ quote.author }}: {{ quote.content }}</p>
+                            <p>
+                                    Posted by <a href='/user/{{ quote.posted_by.id }}'>{{ quote.posted_by.first_name }}</a>
+                                </p>
+                            <form action="/like_btn" method="post">{% csrf_token %}
+                                <input type='hidden' name='this_quote' value="{{quote.id}}">
+                                <input type="submit" value="Like">
+                            </form>
+                        </div>
+                            {% endif %}
+                        {% endfor %} 
+                </div>
+                
+            </div>
+            
+                <a href='/logout'>Logout</a>
+                <h4>Your Favorites</h4>
+                <div >
+                    {% if fave_quotes %} {% for quote in fave_quotes %}
+                    <div >
+                        <p><span>{{ quote.author }}</span>: {{ quote.content }}</p>
+                        <p >
+                                Posted by <a href='/user/{{ quote.posted_by.id }}'>{{ quote.posted_by.first_name }}</a>
+                        </p>
+                        <form action="/drop_btn" method="post">
+                            {% csrf_token %}
+                            <input type='hidden' name='this_quote' value="{{quote.id}}">
+                            <input type="submit" value="Drop">
+                        </form>
+                    </div>
+                    {% endfor %} {% endif %}
+
+                </div>
+                <div >
+                    <h3>Contribute a quote:</h3>
+                    <form action="/user_create" method="post">
+                        {% csrf_token %}
+                        Wisdom by:
+                            <input type="text" name="author">
+                        
+                        Quote:
+                            <textarea name='content' rows="5" cols="35"></textarea>
+                        
+                        <input type="submit" value="Submit!">
+                    </form>
+                </div>
+                <br>
+                {% if messages %}
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

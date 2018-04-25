@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Show User Info</title>
+    {% load static %}
+</head>
+
+<body>
+    <div>
+        <p>
+            <a href='/success'>Dashboard</a> -
+            <a href='/logout'>Logout</a>
+        </p>
+        <h1>Posts by {{ user.first_name }}</h1>
+        <p>Count: {{ user.quotes.all.count }}</p> <!-- cannot get this to work -->
+        {% for quote in quotes %}
+            {% if quotes %} 
+        <p>
+            {{ quote.author }}: {{ quote.content }}</p>
+            <hr>
+            {% endif %}
+        {% endfor %} 
+
+    </div>
+</body>
+
+</html>
